@@ -12,8 +12,10 @@ import (
 	"clove-api/global/exception/check"
 	"clove-api/global/response"
 	"clove-api/global/static"
+	"fmt"
 	"log"
 	"net/http"
+	"path/filepath"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -47,9 +49,8 @@ func (ic *ImageController) Create(c *fiber.Ctx) error {
 // Image View Controller
 func (ic *ImageController) GetInstanceByFileName(c *fiber.Ctx) error {
 	fileName := c.Params("fileName")
-	instance, serviceError := ic.imageService.GetInstanceByFileName(c.Context(), fileName)
-	check.SniffError(serviceError, serviceError)
-
+	instance, imageFileName := ic.imageService.GetInstanceByFileName(c.Context(), fileName)
+	c.Set("Content-Type", fmt.Sprintf("image/%s", filepath.Ext(imageFileName)[1:]))
 	return c.Status(http.StatusOK).Send(instance)
 }
 

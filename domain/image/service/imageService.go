@@ -31,11 +31,11 @@ func (is *ImageService) Create(ctx context.Context, imageCreateRequest *dto.Imag
 }
 
 // Image View Service
-func (is *ImageService) GetInstanceByFileName(ctx context.Context, fileName string) ([]byte, error) {
+func (is *ImageService) GetInstanceByFileName(ctx context.Context, fileName string) ([]byte, string) {
 	image, repositoryError := is.imageRepository.FindWithInstanceByFileName(ctx, fileName)
 	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError))
 
-	return image.Instance, nil
+	return image.Instance, image.FileName
 }
 
 // Image List Read Service
