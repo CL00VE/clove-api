@@ -110,9 +110,9 @@ func (ic *ImageController) DeleteAll(c *fiber.Ctx) error {
 	_, serviceError := ic.imageService.DeleteAll(c.Context())
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
@@ -122,9 +122,9 @@ func (ic *ImageController) Delete(c *fiber.Ctx) error {
 	serviceError := ic.imageService.Delete(c.Context(), id)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
@@ -134,20 +134,20 @@ func (ic *ImageController) DeleteByName(c *fiber.Ctx) error {
 	serviceError := ic.imageService.DeleteByName(c.Context(), name)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
 // Image Delete Controller (condition: fileName)
 func (ic *ImageController) DeleteByFileName(c *fiber.Ctx) error {
 	fileName := c.Params("fileName")
-	serviceError := ic.imageService.DeleteByName(c.Context(), fileName)
+	serviceError := ic.imageService.DeleteByFileName(c.Context(), fileName)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
