@@ -15,12 +15,16 @@ type ImageNotFoundException struct {
 	ErrorData   string
 }
 
-func NewImageNotFoundException(err string) *ImageNotFoundException {
+func NewImageNotFoundException(err error) *ImageNotFoundException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &ImageNotFoundException{
 		Code:        http.StatusNotFound,
 		Message:     http.StatusText(http.StatusNotFound),
 		Description: "The image could not be found.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

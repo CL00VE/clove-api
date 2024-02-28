@@ -28,7 +28,7 @@ type CommentController struct {
 // Comment Create Controller
 func (cc *CommentController) Create(c *fiber.Ctx) error {
 	requestBody, requestError := new(dto.CommentCreateRequest).ParseX(c)
-	check.SniffError(requestError, exception.NewCommentRequestException(requestError.Error()))
+	check.SniffError(requestError, exception.NewCommentRequestException(requestError))
 
 	_, serviceError := cc.commentService.Create(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
@@ -104,7 +104,7 @@ func (cc *CommentController) AddLike(c *fiber.Ctx) error {
 // Comment Update Controller
 func (cc *CommentController) Update(c *fiber.Ctx) error {
 	requestBody, requestError := new(dto.CommentUpdateRequest).ParseX(c)
-	check.SniffError(requestError, exception.NewCommentRequestException(requestError.Error()))
+	check.SniffError(requestError, exception.NewCommentRequestException(requestError))
 
 	_, serviceError := cc.commentService.Update(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)

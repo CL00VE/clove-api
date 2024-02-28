@@ -15,12 +15,16 @@ type PostRequestException struct {
 	ErrorData   string
 }
 
-func NewPostRequestException(err string) *PostRequestException {
+func NewPostRequestException(err error) *PostRequestException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &PostRequestException{
 		Code:        http.StatusBadRequest,
 		Message:     http.StatusText(http.StatusBadRequest),
 		Description: "The post could not be parse.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

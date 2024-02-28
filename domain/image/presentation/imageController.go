@@ -12,6 +12,7 @@ import (
 	"clove-api/global/exception/check"
 	"clove-api/global/response"
 	"clove-api/global/static"
+	"log"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -27,8 +28,11 @@ type ImageController struct {
 
 // Image Create Controller
 func (ic *ImageController) Create(c *fiber.Ctx) error {
+	log.Print("ImageController - Create")
 	requestBody, requestError := new(dto.ImageCreateRequest).ParseX(c)
-	check.SniffError(requestError, exception.NewImageRequestException(requestError.Error()))
+	log.Print(requestBody, requestError)
+	check.SniffError(requestError, exception.NewImageRequestException(requestError))
+	log.Print("...")
 
 	image, serviceError := ic.imageService.Create(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)

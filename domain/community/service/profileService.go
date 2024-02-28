@@ -35,7 +35,7 @@ func (ps *ProfileService) Read(ctx context.Context, id string) (*ent.Profile, er
 	ID, strconvError := strconv.Atoi(id)
 	check.SniffError(strconvError, strconvError)
 	profile, repositoryError := ps.profileRepository.FindById(ctx, ID)
-	check.SniffNotFound(profile, exception.NewProfileNotFoundException(repositoryError.Error()))
+	check.SniffNotFound(profile, exception.NewProfileNotFoundException(repositoryError))
 	return profile, repositoryError
 }
 

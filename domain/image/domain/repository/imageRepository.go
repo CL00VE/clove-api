@@ -58,14 +58,14 @@ func (ir *ImageRepository) RemoveById(ctx context.Context, id int) error {
 
 func (ir *ImageRepository) RemoveByName(ctx context.Context, name string) error {
 	image, dbError := ir.db.Image.Query().Where(image.Name(name)).Only(ctx)
-	check.SniffNotFound(image, exception.NewImageNotFoundException(dbError.Error()))
+	check.SniffNotFound(image, exception.NewImageNotFoundException(dbError))
 	check.SniffError(dbError, dbError)
 	return ir.db.Image.DeleteOne(image).Exec(ctx)
 }
 
 func (ir *ImageRepository) RemoveByFileName(ctx context.Context, fileName string) error {
 	image, dbError := ir.db.Image.Query().Where(image.FileName(fileName)).Only(ctx)
-	check.SniffNotFound(image, exception.NewImageNotFoundException(dbError.Error()))
+	check.SniffNotFound(image, exception.NewImageNotFoundException(dbError))
 	check.SniffError(dbError, dbError)
 	return ir.db.Image.DeleteOne(image).Exec(ctx)
 }

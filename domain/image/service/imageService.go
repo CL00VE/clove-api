@@ -33,7 +33,7 @@ func (is *ImageService) Create(ctx context.Context, imageCreateRequest *dto.Imag
 // Image View Service
 func (is *ImageService) GetInstanceByFileName(ctx context.Context, fileName string) ([]byte, error) {
 	image, repositoryError := is.imageRepository.FindByFileName(ctx, fileName)
-	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError.Error()))
+	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError))
 
 	return image.Instance, nil
 }
@@ -49,21 +49,21 @@ func (is *ImageService) Read(ctx context.Context, id string) (*ent.Image, error)
 	ID, strconvError := strconv.Atoi(id)
 	check.SniffError(strconvError, strconvError)
 	image, repositoryError := is.imageRepository.FindById(ctx, ID)
-	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError.Error()))
+	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError))
 	return image, repositoryError
 }
 
 // Image Read Service (condition: name)
 func (is *ImageService) ReadByName(ctx context.Context, name string) (*ent.Image, error) {
 	image, repositoryError := is.imageRepository.FindByName(ctx, name)
-	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError.Error()))
+	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError))
 	return image, repositoryError
 }
 
 // Image Read Service (condition: fileName)
 func (is *ImageService) ReadByFileName(ctx context.Context, fileName string) (*ent.Image, error) {
 	image, repositoryError := is.imageRepository.FindByFileName(ctx, fileName)
-	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError.Error()))
+	check.SniffNotFound(image, exception.NewImageNotFoundException(repositoryError))
 	return image, repositoryError
 }
 

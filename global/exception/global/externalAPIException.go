@@ -18,12 +18,16 @@ type ExternalAPIException struct {
 	ErrorData   string
 }
 
-func NewExternalAPIException(err string) *ExternalAPIException {
+func NewExternalAPIException(err error) *ExternalAPIException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &ExternalAPIException{
 		Code:        http.StatusBadGateway,
 		Message:     http.StatusText(http.StatusBadGateway),
 		Description: "External API server error.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

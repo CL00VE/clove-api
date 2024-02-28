@@ -15,12 +15,16 @@ type PostNotFoundException struct {
 	ErrorData   string
 }
 
-func NewPostNotFoundException(err string) *PostNotFoundException {
+func NewPostNotFoundException(err error) *PostNotFoundException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &PostNotFoundException{
 		Code:        http.StatusNotFound,
 		Message:     http.StatusText(http.StatusNotFound),
 		Description: "The post could not be found.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

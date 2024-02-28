@@ -15,12 +15,16 @@ type ProfileRequestException struct {
 	ErrorData   string
 }
 
-func NewProfileRequestException(err string) *ProfileRequestException {
+func NewProfileRequestException(err error) *ProfileRequestException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &ProfileRequestException{
 		Code:        http.StatusBadRequest,
 		Message:     http.StatusText(http.StatusBadRequest),
 		Description: "The profile could not be parse.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

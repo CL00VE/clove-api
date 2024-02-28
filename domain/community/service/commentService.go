@@ -68,7 +68,7 @@ func (cs *CommentService) Read(ctx context.Context, id string) (*ent.Comment, er
 	ID, strconvError := strconv.Atoi(id)
 	check.SniffError(strconvError, strconvError)
 	comment, repositoryError := cs.commentRepository.FindById(ctx, ID)
-	check.SniffNotFound(comment, exception.NewCommentNotFoundException(repositoryError.Error()))
+	check.SniffNotFound(comment, exception.NewCommentNotFoundException(repositoryError))
 	return comment, repositoryError
 }
 

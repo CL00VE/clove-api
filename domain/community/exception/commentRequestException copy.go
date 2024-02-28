@@ -15,12 +15,16 @@ type CommentRequestException struct {
 	ErrorData   string
 }
 
-func NewCommentRequestException(err string) *CommentRequestException {
+func NewCommentRequestException(err error) *CommentRequestException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &CommentRequestException{
 		Code:        http.StatusBadRequest,
 		Message:     http.StatusText(http.StatusBadRequest),
 		Description: "The comment could not be parse.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

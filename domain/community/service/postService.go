@@ -95,7 +95,7 @@ func (ps *PostService) Read(ctx context.Context, id string) (*ent.Post, error) {
 	ID, strconvError := strconv.Atoi(id)
 	check.SniffError(strconvError, strconvError)
 	post, repositoryError := ps.postRepository.FindById(ctx, ID)
-	check.SniffNotFound(post, exception.NewPostNotFoundException(repositoryError.Error()))
+	check.SniffNotFound(post, exception.NewPostNotFoundException(repositoryError))
 	return post, repositoryError
 }
 

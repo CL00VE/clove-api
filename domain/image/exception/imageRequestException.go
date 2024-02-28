@@ -15,12 +15,16 @@ type ImageRequestException struct {
 	ErrorData   string
 }
 
-func NewImageRequestException(err string) *ImageRequestException {
+func NewImageRequestException(err error) *ImageRequestException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &ImageRequestException{
 		Code:        http.StatusBadRequest,
 		Message:     http.StatusText(http.StatusBadRequest),
 		Description: "The image could not be parse.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

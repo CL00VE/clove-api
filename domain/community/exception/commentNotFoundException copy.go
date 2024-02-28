@@ -15,12 +15,16 @@ type CommentNotFoundException struct {
 	ErrorData   string
 }
 
-func NewCommentNotFoundException(err string) *CommentNotFoundException {
+func NewCommentNotFoundException(err error) *CommentNotFoundException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &CommentNotFoundException{
 		Code:        http.StatusNotFound,
 		Message:     http.StatusText(http.StatusNotFound),
 		Description: "The comment could not be found.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

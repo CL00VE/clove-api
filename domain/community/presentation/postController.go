@@ -27,7 +27,7 @@ type PostController struct {
 // Post Create Controller
 func (pc *PostController) Create(c *fiber.Ctx) error {
 	requestBody, requestError := new(dto.PostCreateRequest).ParseX(c)
-	check.SniffError(requestError, exception.NewPostRequestException(requestError.Error()))
+	check.SniffError(requestError, exception.NewPostRequestException(requestError))
 
 	_, serviceError := pc.postService.Create(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
@@ -94,7 +94,7 @@ func (pc *PostController) AddLike(c *fiber.Ctx) error {
 // Post Update Controller
 func (pc *PostController) Update(c *fiber.Ctx) error {
 	requestBody, requestError := new(dto.PostUpdateRequest).ParseX(c)
-	check.SniffError(requestError, exception.NewPostRequestException(requestError.Error()))
+	check.SniffError(requestError, exception.NewPostRequestException(requestError))
 
 	_, serviceError := pc.postService.Update(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)

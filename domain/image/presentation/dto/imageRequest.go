@@ -5,6 +5,7 @@ import (
 	"clove-api/global/util"
 	"clove-api/global/validator"
 	"fmt"
+	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath"
@@ -16,7 +17,7 @@ import (
 type ImageCreateRequest struct {
 	Name        string                `form:"name" validate:"required"`
 	Description string                `form:"description"`
-	Image       *multipart.FileHeader `form:"image" validate:"required,image"`
+	Image       *multipart.FileHeader `form:"image" validate:"image,required"`
 }
 
 func (request *ImageCreateRequest) ToEntity() (*ent.Image, error) {
@@ -36,6 +37,7 @@ func (request *ImageCreateRequest) ToEntity() (*ent.Image, error) {
 }
 
 func (request *ImageCreateRequest) ParseX(c *fiber.Ctx) (*ImageCreateRequest, error) {
+	log.Print("ImageCreateRequest - ParseX")
 	request.Name = c.FormValue("name")
 	request.Description = c.FormValue("description")
 

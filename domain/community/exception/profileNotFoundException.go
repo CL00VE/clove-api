@@ -15,12 +15,16 @@ type ProfileNotFoundException struct {
 	ErrorData   string
 }
 
-func NewProfileNotFoundException(err string) *ProfileNotFoundException {
+func NewProfileNotFoundException(err error) *ProfileNotFoundException {
+	data := ""
+	if err != nil {
+		data = err.Error()
+	}
 	return &ProfileNotFoundException{
 		Code:        http.StatusNotFound,
 		Message:     http.StatusText(http.StatusNotFound),
 		Description: "The profile could not be found.",
-		ErrorData:   err,
+		ErrorData:   data,
 	}
 }
 

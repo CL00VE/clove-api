@@ -26,7 +26,7 @@ type ProfileController struct {
 // Profile Create Controller
 func (pc *ProfileController) Create(c *fiber.Ctx) error {
 	requestBody, requestError := new(dto.ProfileCreateRequest).ParseX(c)
-	check.SniffError(requestError, exception.NewProfileRequestException(requestError.Error()))
+	check.SniffError(requestError, exception.NewProfileRequestException(requestError))
 
 	_, serviceError := pc.profileService.Create(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
@@ -65,7 +65,7 @@ func (pc *ProfileController) Read(c *fiber.Ctx) error {
 // Profile Update Controller
 func (pc *ProfileController) Update(c *fiber.Ctx) error {
 	requestBody, requestError := new(dto.ProfileUpdateRequest).ParseX(c)
-	check.SniffError(requestError, exception.NewProfileRequestException(requestError.Error()))
+	check.SniffError(requestError, exception.NewProfileRequestException(requestError))
 
 	_, serviceError := pc.profileService.Update(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
