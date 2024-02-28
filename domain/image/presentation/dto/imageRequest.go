@@ -25,7 +25,7 @@ func (request *ImageCreateRequest) ToEntity() (*ent.Image, error) {
 	image.Name = request.Name
 	image.Description = request.Description
 	image.FileName = fmt.Sprintf("%s%s", uuid.New().String(), filepath.Ext(request.Image.Filename))
-	image.URL = fmt.Sprintf("%s://%s:%s/%s/api/image/instance/%s", os.Getenv("SERVER_PROTOCOL"), os.Getenv("SERVER_DOMAIN"), os.Getenv("SERVER_VERSION"), os.Getenv("SERVER_PORT"), image.FileName)
+	image.URL = fmt.Sprintf("%s://%s:%s/%s/api/image/instance/%s", os.Getenv("SERVER_PROTOCOL"), os.Getenv("SERVER_DOMAIN"), os.Getenv("SERVER_PORT"), os.Getenv("SERVER_VERSION"), image.FileName)
 	image.Size = util.FormatFileSize(request.Image.Size)
 	fileBytes, err := util.GetByteByFile(request.Image)
 	if err != nil {
