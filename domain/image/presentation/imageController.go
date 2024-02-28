@@ -30,12 +30,13 @@ func (ic *ImageController) Create(c *fiber.Ctx) error {
 	requestBody, requestError := new(dto.ImageCreateRequest).ParseX(c)
 	check.SniffError(requestError, exception.NewImageRequestException(requestError.Error()))
 
-	_, serviceError := ic.imageService.Create(c.Context(), requestBody)
+	image, serviceError := ic.imageService.Create(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
 
 	return c.Status(http.StatusCreated).JSON(&response.GeneralResponse{
 		Status:  status.GetCloveSuccessCode(http.StatusCreated),
 		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusCreated)),
+		Data:    image,
 	})
 }
 
