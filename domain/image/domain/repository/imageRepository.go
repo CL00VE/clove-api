@@ -33,18 +33,22 @@ func (ir *ImageRepository) Save(ctx context.Context, image *ent.Image) (*ent.Ima
 }
 
 func (ir *ImageRepository) FindAll(ctx context.Context) ([]*ent.Image, error) {
-	return ir.db.Image.Query().All(ctx)
+	return ir.db.Image.Query().Select(image.FieldID, image.FieldName, image.FieldDescription, image.FieldFileName, image.FieldURL, image.FieldSize, image.FieldCreatedAt).All(ctx)
 }
 
 func (ir *ImageRepository) FindById(ctx context.Context, id int) (*ent.Image, error) {
-	return ir.db.Image.Query().Where(image.ID(id)).Only(ctx)
+	return ir.db.Image.Query().Select(image.FieldID, image.FieldName, image.FieldDescription, image.FieldFileName, image.FieldURL, image.FieldSize, image.FieldCreatedAt).Where(image.ID(id)).Only(ctx)
 }
 
 func (ir *ImageRepository) FindByName(ctx context.Context, name string) (*ent.Image, error) {
-	return ir.db.Image.Query().Where(image.Name(name)).Only(ctx)
+	return ir.db.Image.Query().Select(image.FieldID, image.FieldName, image.FieldDescription, image.FieldFileName, image.FieldURL, image.FieldSize, image.FieldCreatedAt).Where(image.Name(name)).Only(ctx)
 }
 
 func (ir *ImageRepository) FindByFileName(ctx context.Context, fileName string) (*ent.Image, error) {
+	return ir.db.Image.Query().Select(image.FieldID, image.FieldName, image.FieldDescription, image.FieldFileName, image.FieldURL, image.FieldSize, image.FieldCreatedAt).Where(image.FileName(fileName)).Only(ctx)
+}
+
+func (ir *ImageRepository) FindWithInstanceByFileName(ctx context.Context, fileName string) (*ent.Image, error) {
 	return ir.db.Image.Query().Where(image.FileName(fileName)).Only(ctx)
 }
 
