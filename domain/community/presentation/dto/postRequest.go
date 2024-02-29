@@ -20,7 +20,11 @@ func (request *PostCreateRequest) ToEntity() *ent.Post {
 	return post
 }
 
-func (request *PostCreateRequest) ParseX(c *fiber.Ctx) (*PostCreateRequest, error) {
+func (request *PostCreateRequest) Parse(c *fiber.Ctx) (*PostCreateRequest, error) {
+	if err := c.BodyParser(request); err != nil {
+		return nil, err
+	}
+
 	if err := validator.RequestValidator(request); err != nil {
 		return nil, err
 	}
@@ -29,7 +33,7 @@ func (request *PostCreateRequest) ParseX(c *fiber.Ctx) (*PostCreateRequest, erro
 }
 
 type PostUpdateRequest struct {
-	ID      int    `json:"ID" validate:"required"`
+	ID      int    `json:"ID" validate:"number"`
 	Icon    string `json:"icon"`
 	Content string `json:"content"`
 	Like    int    `json:"like"`
@@ -44,7 +48,11 @@ func (request *PostUpdateRequest) ToEntity() *ent.Post {
 	return post
 }
 
-func (request *PostUpdateRequest) ParseX(c *fiber.Ctx) (*PostUpdateRequest, error) {
+func (request *PostUpdateRequest) Parse(c *fiber.Ctx) (*PostUpdateRequest, error) {
+	if err := c.BodyParser(request); err != nil {
+		return nil, err
+	}
+
 	if err := validator.RequestValidator(request); err != nil {
 		return nil, err
 	}

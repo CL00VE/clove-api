@@ -9,7 +9,7 @@ import (
 
 type CommentCreateRequest struct {
 	Text   string `json:"text" validate:"required"`
-	PostID int    `json:"postID" validate:"required"`
+	PostID int    `json:"postID" validate:"number"`
 }
 
 func (request *CommentCreateRequest) ToEntity() *ent.Comment {
@@ -20,7 +20,11 @@ func (request *CommentCreateRequest) ToEntity() *ent.Comment {
 	return comment
 }
 
-func (request *CommentCreateRequest) ParseX(c *fiber.Ctx) (*CommentCreateRequest, error) {
+func (request *CommentCreateRequest) Parse(c *fiber.Ctx) (*CommentCreateRequest, error) {
+	if err := c.BodyParser(request); err != nil {
+		return nil, err
+	}
+
 	if err := validator.RequestValidator(request); err != nil {
 		return nil, err
 	}
@@ -29,7 +33,7 @@ func (request *CommentCreateRequest) ParseX(c *fiber.Ctx) (*CommentCreateRequest
 }
 
 type CommentUpdateRequest struct {
-	ID   int    `json:"ID" validate:"required"`
+	ID   int    `json:"ID" validate:"number"`
 	Text string `json:"text"`
 	Like int    `json:"like"`
 }
@@ -42,7 +46,11 @@ func (request *CommentUpdateRequest) ToEntity() *ent.Comment {
 	return comment
 }
 
-func (request *CommentUpdateRequest) ParseX(c *fiber.Ctx) (*CommentUpdateRequest, error) {
+func (request *CommentUpdateRequest) Parse(c *fiber.Ctx) (*CommentUpdateRequest, error) {
+	if err := c.BodyParser(request); err != nil {
+		return nil, err
+	}
+
 	if err := validator.RequestValidator(request); err != nil {
 		return nil, err
 	}

@@ -8,7 +8,7 @@ import (
 )
 
 type ProfileCreateRequest struct {
-	Name  string `form:"name" validate:"required"`
+	Name  string `json:"name" validate:"required"`
 	Image string `json:"image" validate:"required"`
 }
 
@@ -20,7 +20,11 @@ func (request *ProfileCreateRequest) ToEntity() *ent.Profile {
 	return profile
 }
 
-func (request *ProfileCreateRequest) ParseX(c *fiber.Ctx) (*ProfileCreateRequest, error) {
+func (request *ProfileCreateRequest) Parse(c *fiber.Ctx) (*ProfileCreateRequest, error) {
+	if err := c.BodyParser(request); err != nil {
+		return nil, err
+	}
+
 	if err := validator.RequestValidator(request); err != nil {
 		return nil, err
 	}
@@ -29,19 +33,24 @@ func (request *ProfileCreateRequest) ParseX(c *fiber.Ctx) (*ProfileCreateRequest
 }
 
 type ProfileUpdateRequest struct {
-	ID    int    `json:"ID" validate:"required"`
+	ID    int    `json:"ID" validate:"number"`
 	Name  string `json:"name"`
 	Image string `json:"image"`
 }
 
 func (request *ProfileUpdateRequest) ToEntity() *ent.Profile {
 	profile := new(ent.Profile)
+	profile.ID = request.ID
 	profile.Name = request.Name
 	profile.Image = request.Image
 	return profile
 }
 
-func (request *ProfileUpdateRequest) ParseX(c *fiber.Ctx) (*ProfileUpdateRequest, error) {
+func (request *ProfileUpdateRequest) Parse(c *fiber.Ctx) (*ProfileUpdateRequest, error) {
+	if err := c.BodyParser(request); err != nil {
+		return nil, err
+	}
+
 	if err := validator.RequestValidator(request); err != nil {
 		return nil, err
 	}

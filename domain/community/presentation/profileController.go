@@ -25,7 +25,7 @@ type ProfileController struct {
 
 // Profile Create Controller
 func (pc *ProfileController) Create(c *fiber.Ctx) error {
-	requestBody, requestError := new(dto.ProfileCreateRequest).ParseX(c)
+	requestBody, requestError := new(dto.ProfileCreateRequest).Parse(c)
 	check.SniffError(requestError, exception.NewProfileRequestException(requestError))
 
 	_, serviceError := pc.profileService.Create(c.Context(), requestBody)
@@ -64,14 +64,14 @@ func (pc *ProfileController) Read(c *fiber.Ctx) error {
 
 // Profile Update Controller
 func (pc *ProfileController) Update(c *fiber.Ctx) error {
-	requestBody, requestError := new(dto.ProfileUpdateRequest).ParseX(c)
+	requestBody, requestError := new(dto.ProfileUpdateRequest).Parse(c)
 	check.SniffError(requestError, exception.NewProfileRequestException(requestError))
 
 	_, serviceError := pc.profileService.Update(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }

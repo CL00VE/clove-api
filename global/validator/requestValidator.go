@@ -5,19 +5,12 @@ package validator
 
 import (
 	"fmt"
-	"log"
 	"mime/multipart"
 	"path/filepath"
 	"strings"
 
 	"github.com/go-playground/validator/v10"
 )
-
-// var v *validator.Validate
-
-// func init() {
-// 	v = validator.New()
-// }
 
 var v *validator.Validate
 
@@ -43,7 +36,6 @@ func init() {
 
 // Request data validate util
 func RequestValidator(request any) error {
-	log.Print("RequestValidator")
 	if err := v.Struct(request); err != nil {
 		var messages []string
 		for _, err := range err.(validator.ValidationErrors) {
@@ -53,7 +45,6 @@ func RequestValidator(request any) error {
 		errMessage := strings.Join(messages, ", ")
 		return fmt.Errorf("%s", errMessage)
 	}
-	log.Print("success")
 
 	return nil
 }

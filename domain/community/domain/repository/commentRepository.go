@@ -3,6 +3,7 @@ package repository
 import (
 	"clove-api/domain/community/domain/ent"
 	"clove-api/domain/community/domain/ent/comment"
+	"clove-api/domain/community/domain/ent/profile"
 	"clove-api/global/util"
 	"context"
 	"math/rand"
@@ -28,12 +29,9 @@ func (cr *CommentRepository) Save(ctx context.Context, comment *ent.Comment) (*e
 			return nil, err
 		}
 
-		randomOffset := rand.Intn(profileCount)
+		randomProfileID := rand.Intn(profileCount) + 1
 
-		randomProfile, err := cr.db.Profile.Query().
-			Offset(randomOffset).
-			Limit(1).
-			Only(ctx)
+		randomProfile, err := cr.db.Profile.Query().Where(profile.ID(randomProfileID)).Only(ctx)
 		if err != nil {
 			return nil, err
 		}

@@ -27,7 +27,7 @@ type CommentController struct {
 
 // Comment Create Controller
 func (cc *CommentController) Create(c *fiber.Ctx) error {
-	requestBody, requestError := new(dto.CommentCreateRequest).ParseX(c)
+	requestBody, requestError := new(dto.CommentCreateRequest).Parse(c)
 	check.SniffError(requestError, exception.NewCommentRequestException(requestError))
 
 	_, serviceError := cc.commentService.Create(c.Context(), requestBody)
@@ -95,23 +95,23 @@ func (cc *CommentController) AddLike(c *fiber.Ctx) error {
 	_, serviceError := cc.commentService.AddLike(c.Context(), id)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
 // Comment Update Controller
 func (cc *CommentController) Update(c *fiber.Ctx) error {
-	requestBody, requestError := new(dto.CommentUpdateRequest).ParseX(c)
+	requestBody, requestError := new(dto.CommentUpdateRequest).Parse(c)
 	check.SniffError(requestError, exception.NewCommentRequestException(requestError))
 
 	_, serviceError := cc.commentService.Update(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
@@ -120,9 +120,9 @@ func (cc *CommentController) DeleteAll(c *fiber.Ctx) error {
 	_, serviceError := cc.commentService.DeleteAll(c.Context())
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
@@ -132,8 +132,8 @@ func (cc *CommentController) Delete(c *fiber.Ctx) error {
 	serviceError := cc.commentService.Delete(c.Context(), id)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }

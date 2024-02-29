@@ -5,7 +5,6 @@ import (
 	"clove-api/global/util"
 	"clove-api/global/validator"
 	"fmt"
-	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath"
@@ -36,8 +35,7 @@ func (request *ImageCreateRequest) ToEntity() (*ent.Image, error) {
 	return image, nil
 }
 
-func (request *ImageCreateRequest) ParseX(c *fiber.Ctx) (*ImageCreateRequest, error) {
-	log.Print("ImageCreateRequest - ParseX")
+func (request *ImageCreateRequest) Parse(c *fiber.Ctx) (*ImageCreateRequest, error) {
 	request.Name = c.FormValue("name")
 	request.Description = c.FormValue("description")
 

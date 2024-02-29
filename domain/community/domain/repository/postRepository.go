@@ -4,6 +4,7 @@ import (
 	"clove-api/domain/community/domain/ent"
 	"clove-api/domain/community/domain/ent/comment"
 	"clove-api/domain/community/domain/ent/post"
+	"clove-api/domain/community/domain/ent/profile"
 	"clove-api/global/util"
 	"context"
 	"math/rand"
@@ -29,12 +30,9 @@ func (pr *PostRepository) Save(ctx context.Context, post *ent.Post) (*ent.Post, 
 			return nil, err
 		}
 
-		randomOffset := rand.Intn(profileCount)
+		randomProfileID := rand.Intn(profileCount) + 1
 
-		randomProfile, err := pr.db.Profile.Query().
-			Offset(randomOffset).
-			Limit(1).
-			Only(ctx)
+		randomProfile, err := pr.db.Profile.Query().Where(profile.ID(randomProfileID)).Only(ctx)
 		if err != nil {
 			return nil, err
 		}

@@ -26,7 +26,7 @@ type PostController struct {
 
 // Post Create Controller
 func (pc *PostController) Create(c *fiber.Ctx) error {
-	requestBody, requestError := new(dto.PostCreateRequest).ParseX(c)
+	requestBody, requestError := new(dto.PostCreateRequest).Parse(c)
 	check.SniffError(requestError, exception.NewPostRequestException(requestError))
 
 	_, serviceError := pc.postService.Create(c.Context(), requestBody)
@@ -85,23 +85,23 @@ func (pc *PostController) AddLike(c *fiber.Ctx) error {
 	_, serviceError := pc.postService.AddLike(c.Context(), id)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
 // Post Update Controller
 func (pc *PostController) Update(c *fiber.Ctx) error {
-	requestBody, requestError := new(dto.PostUpdateRequest).ParseX(c)
+	requestBody, requestError := new(dto.PostUpdateRequest).Parse(c)
 	check.SniffError(requestError, exception.NewPostRequestException(requestError))
 
 	_, serviceError := pc.postService.Update(c.Context(), requestBody)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
@@ -110,9 +110,9 @@ func (pc *PostController) DeleteAll(c *fiber.Ctx) error {
 	_, serviceError := pc.postService.DeleteAll(c.Context())
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }
 
@@ -122,8 +122,8 @@ func (pc *PostController) Delete(c *fiber.Ctx) error {
 	serviceError := pc.postService.Delete(c.Context(), id)
 	check.SniffError(serviceError, serviceError)
 
-	return c.Status(http.StatusNoContent).JSON(&response.GeneralResponse{
-		Status:  status.GetCloveSuccessCode(http.StatusNoContent),
-		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusNoContent)),
+	return c.Status(http.StatusOK).JSON(&response.GeneralResponse{
+		Status:  status.GetCloveSuccessCode(http.StatusOK),
+		Message: static.MessageFormat(enum.ResponseType("SUCCESS").Value(), http.StatusText(http.StatusOK)),
 	})
 }

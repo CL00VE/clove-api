@@ -31,7 +31,7 @@ type ImageController struct {
 // Image Create Controller
 func (ic *ImageController) Create(c *fiber.Ctx) error {
 	log.Print("ImageController - Create")
-	requestBody, requestError := new(dto.ImageCreateRequest).ParseX(c)
+	requestBody, requestError := new(dto.ImageCreateRequest).Parse(c)
 	log.Print(requestBody, requestError)
 	check.SniffError(requestError, exception.NewImageRequestException(requestError))
 	log.Print("...")
